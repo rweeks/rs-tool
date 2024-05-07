@@ -1,0 +1,15 @@
+[package]
+name = "rs-tool"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+fastrand = "2.1.0"
+clap = { version = "4.5.4", features = ["derive"] }
+regex = "1.10.4"
+prettytable = "0.10.0"
+rayon = "1.10.0"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
