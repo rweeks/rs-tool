@@ -1,7 +1,7 @@
+use fastrand::Rng;
 use std::cmp::{max, min};
 use std::collections::HashMap;
 use std::hash::Hash;
-use fastrand::Rng;
 
 #[derive(Debug)]
 pub struct Reservoir<T> {
@@ -39,7 +39,7 @@ impl<T> Reservoir<T> {
     }
 }
 
-impl <T:Clone> Reservoir<T> {
+impl<T: Clone> Reservoir<T> {
     pub fn merge(r1: &Reservoir<T>, r2: &Reservoir<T>) -> Reservoir<T> {
         let r1_threshold = r1.num_adds as f32 / (r1.num_adds + r2.num_adds) as f32;
         let r2_threshold = r2.num_adds as f32 / (r1.num_adds + r2.num_adds) as f32;
@@ -76,9 +76,9 @@ impl <T:Clone> Reservoir<T> {
     }
 }
 
-impl <T:Eq + Hash> Reservoir<T> {
+impl<T: Eq + Hash> Reservoir<T> {
     pub fn to_histogram(&self) -> HashMap<&T, f32> {
-        let mut counts : HashMap<&T, i32> = HashMap::new();
+        let mut counts: HashMap<&T, i32> = HashMap::new();
         for item in &self.pool {
             let count = counts.entry(item).or_insert(0);
             *count += 1;
@@ -87,7 +87,10 @@ impl <T:Eq + Hash> Reservoir<T> {
             HashMap::new()
         } else {
             let effective_size = min(self.pool.len() as u32, self.num_adds) as f32;
-            counts.iter().map(|(k, v)| (*k, *v as f32 / effective_size) ).collect()
+            counts
+                .iter()
+                .map(|(k, v)| (*k, *v as f32 / effective_size))
+                .collect()
         }
     }
 }
@@ -152,8 +155,10 @@ mod tests {
         let hello_freq = h.get(&"hello").unwrap();
         let world_freq = h.get(&"world").unwrap();
         let dist_result = (1.0f32 - (hello_freq + world_freq)).abs();
-        assert!(dist_result < 0.001f32,
-                "hello_freq == {hello_freq} world_freq == {world_freq} result == {dist_result}");
+        assert!(
+            dist_result < 0.001f32,
+            "hello_freq == {hello_freq} world_freq == {world_freq} result == {dist_result}"
+        );
         assert!((hello_freq - world_freq).abs() < 0.1f32);
     }
 }
