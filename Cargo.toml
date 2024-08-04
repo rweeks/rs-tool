@@ -1,7 +1,13 @@
 [package]
 name = "rs-tool"
+description = "A command-line tool to perform reservoir sampling on a file or a stream"
 version = "0.1.0"
 edition = "2021"
+license-file = "LICENSE"
+repository = "https://github.com/rweeks/rs-tool"
+readme = "readme.md"
+keywords = ["reservoir", "sample", "statistics", "log", "stream"]
+categories = ["command-line-utilities", "text-processing", "algorithms"]
 
 [dependencies]
 fastrand = "2.1.0"
